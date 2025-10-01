@@ -1,0 +1,224 @@
+{{define "Index"}}
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mapa de Infraestrutura Escolar</title>
+    <link rel="stylesheet" href="./static/css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <!-- Cabeçalho fixo -->
+    <header class="header">
+        <div class="container">
+            <h1 class="logo">Mapa de Infraestrutura Escolar</h1>
+            <nav class="nav">
+                <ul class="nav-list">
+                    <li><a href="#home" class="nav-link active">Início</a></li>
+                    <li><a href="#map" class="nav-link">Mapa</a></li>
+                    <li><a href="#register" class="nav-link">Cadastrar Escola</a></li>
+                    <li><a href="#reports" class="nav-link">Relatórios</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main">
+        <!-- Página Inicial -->
+        <section id="home" class="page active">
+            <div class="container">
+                <div class="hero">
+                    <h2 class="hero-title">Sistema de Mapeamento de Infraestrutura Escolar</h2>
+                    <p class="hero-description">
+                        Visualize escolas em um mapa interativo, acompanhe dados de alunos, professores e estrutura física, 
+                        e acesse relatórios estatísticos detalhados.
+                    </p>
+                    <button class="btn btn-primary" onclick="navigateTo('map')">Acessar Mapa</button>
+                </div>
+                
+                <div class="features">
+                    <div class="feature-card">
+                        <div class="feature-icon">🗺️</div>
+                        <h3>Mapa Interativo</h3>
+                        <p>Visualize escolas em um mapa com cores indicando a capacidade de atendimento.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">📊</div>
+                        <h3>Relatórios Estatísticos</h3>
+                        <p>Gráficos detalhados sobre alunos, professores e capacidade das escolas.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🏫</div>
+                        <h3>Cadastro de Escolas</h3>
+                        <p>Adicione novas escolas ao sistema com informações completas.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Mapa Interativo -->
+        <section id="map" class="page">
+            <div class="container">
+                <h2 class="page-title">Mapa de Escolas</h2>
+                <div class="map-controls">
+                    <div class="filter-group">
+                        <label for="capacity-filter">Filtrar por capacidade:</label>
+                        <select id="capacity-filter" class="form-control">
+                            <option value="all">Todas</option>
+                            <option value="low">Baixa (até 100 alunos)</option>
+                            <option value="medium">Média (101-500 alunos)</option>
+                            <option value="high">Alta (mais de 500 alunos)</option>
+                        </select>
+                    </div>
+                    <button id="reset-map" class="btn btn-secondary">Redefinir Visualização</button>
+                </div>
+                <div class="map-container">
+                    <div id="school-map" class="school-map">
+                        <!-- Mapa será renderizado aqui via JavaScript -->
+                        <div class="map-placeholder">
+                            <p>Carregando mapa...</p>
+                        </div>
+                    </div>
+                    <div class="map-legend">
+                        <h4>Legenda de Capacidade</h4>
+                        <div class="legend-item">
+                            <span class="legend-color low-capacity"></span>
+                            <span>Baixa (até 100 alunos)</span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-color medium-capacity"></span>
+                            <span>Média (101-500 alunos)</span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-color high-capacity"></span>
+                            <span>Alta (mais de 500 alunos)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Cadastro de Escolas -->
+        <section id="register" class="page">
+            <div class="container">
+                <h2 class="page-title">Cadastrar Nova Escola</h2>
+                <form id="school-form" class="school-form">
+                    <div class="form-group">
+                        <label for="school-name">Nome da Escola *</label>
+                        <input type="text" id="school-name" class="form-control" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="school-address">Endereço *</label>
+                        <input type="text" id="school-address" class="form-control" required>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="students-count">Número de Alunos *</label>
+                            <input type="number" id="students-count" class="form-control" min="0" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="teachers-count">Número de Professores *</label>
+                            <input type="number" id="teachers-count" class="form-control" min="0" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="infrastructure">Estrutura Física</label>
+                        <div class="checkbox-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="infrastructure" value="library"> Biblioteca
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="infrastructure" value="lab"> Laboratório de Informática
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="infrastructure" value="sports"> Quadra Esportiva
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="infrastructure" value="auditorium"> Auditório
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="infrastructure" value="cafeteria"> Refeitório
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">Cadastrar Escola</button>
+                        <button type="reset" class="btn btn-secondary">Limpar Formulário</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <!-- Relatórios Estatísticos -->
+        <section id="reports" class="page">
+            <div class="container">
+                <h2 class="page-title">Relatórios Estatísticos</h2>
+                
+                <div class="report-controls">
+                    <div class="filter-group">
+                        <label for="report-type">Tipo de Relatório:</label>
+                        <select id="report-type" class="form-control">
+                            <option value="students">Alunos por Escola</option>
+                            <option value="teachers">Professores por Escola</option>
+                            <option value="capacity">Capacidade de Atendimento</option>
+                        </select>
+                    </div>
+                    <button id="generate-report" class="btn btn-primary">Gerar Relatório</button>
+                </div>
+                
+                <div class="charts-container">
+                    <div class="chart-wrapper">
+                        <canvas id="students-chart"></canvas>
+                    </div>
+                    <div class="chart-wrapper">
+                        <canvas id="teachers-chart"></canvas>
+                    </div>
+                    <div class="chart-wrapper">
+                        <canvas id="capacity-chart"></canvas>
+                    </div>
+                </div>
+                
+                <div class="statistics-summary">
+                    <h3>Resumo Estatístico</h3>
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <h4>Total de Escolas</h4>
+                            <p id="total-schools">0</p>
+                        </div>
+                        <div class="stat-card">
+                            <h4>Total de Alunos</h4>
+                            <p id="total-students">0</p>
+                        </div>
+                        <div class="stat-card">
+                            <h4>Total de Professores</h4>
+                            <p id="total-teachers">0</p>
+                        </div>
+                        <div class="stat-card">
+                            <h4>Média Alunos/Professor</h4>
+                            <p id="avg-ratio">0</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Rodapé -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2027 Mapa de Infraestrutura Escolar. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <script src="js/scripts.js"></script>
+</body>
+</html>
+
+{{end}}
