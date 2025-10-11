@@ -6,8 +6,9 @@ import (
 	"net/http"
 )
 
-func main () {
+func main() {
 	rotas.CarregarRotas()
 	fmt.Println("O servidor está rodando na porta 8080")
 	http.ListenAndServe(":8080", nil)
 }
+
