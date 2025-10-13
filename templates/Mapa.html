@@ -1,0 +1,58 @@
+{{define "Mapa"}}
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Map</title>
+    <link rel="stylesheet" href="./static/css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+
+<body>
+<section id="map" class="page">
+            <div class="container">
+                <h2 class="page-title">Mapa de Escolas</h2>
+                <div class="map-controls">
+                    <div class="filter-group">
+                        <label for="capacity-filter">Filtrar por capacidade:</label>
+                        <select id="capacity-filter" class="form-control">
+                            <option value="all">Todas</option>
+                            <option value="low">Baixa (até 100 alunos)</option>
+                            <option value="medium">Média (101-500 alunos)</option>
+                            <option value="high">Alta (mais de 500 alunos)</option>
+                        </select>
+                    </div>
+                    <button id="reset-map" class="btn btn-secondary">Redefinir Visualização</button>
+                </div>
+                <div class="map-container">
+                    <div id="school-map" class="school-map">
+                        <!-- Mapa será renderizado aqui via JavaScript -->
+                        <div class="map-placeholder">
+                            <p>Carregando mapa...</p>
+                        </div>
+                    </div>
+                    <div class="map-legend">
+                        <h4>Legenda de Capacidade</h4>
+                        <div class="legend-item">
+                            <span class="legend-color low-capacity"></span>
+                            <span>Baixa (até 100 alunos)</span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-color medium-capacity"></span>
+                            <span>Média (101-500 alunos)</span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-color high-capacity"></span>
+                            <span>Alta (mais de 500 alunos)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </body>
+
+    {{end}}
