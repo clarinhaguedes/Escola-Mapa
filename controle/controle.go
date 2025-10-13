@@ -12,5 +12,5 @@ func Index(W http.ResponseWriter, r *http.Request) {
 }
 
 func Mapa(W http.ResponseWriter, r *http.Request) {
-	temp.Execute(W, "Mapa")
+	temp.ExecuteTemplate(W, "Mapa", nil)
 }
