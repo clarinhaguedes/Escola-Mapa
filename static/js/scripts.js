@@ -1,163 +1,127 @@
-// js/scripts.js - Código para a página de relatórios
+// js/scripts.js - Código para a página do mapa
 
-// Verifica se estamos na página de relatórios
-if (document.getElementById('students-chart')) {
+// Verifica se estamos na página do mapa
+if (document.getElementById('school-map')) {
     document.addEventListener('DOMContentLoaded', function() {
-        initializeReports();
+        initializeMap();
     });
 }
 
-function initializeReports() {
-    // Inicializar gráficos
-    initCharts();
-    
-    // Atualizar relatórios com dados iniciais
-    updateReports();
-    
-    // Configurar evento do botão
-    const generateButton = document.getElementById('generate-report');
-    if (generateButton) {
-        generateButton.addEventListener('click', updateReports);
+function initializeMap() {
+    // Configurar filtro de capacidade
+    const capacityFilter = document.getElementById('capacity-filter');
+    if (capacityFilter) {
+        capacityFilter.addEventListener('change', renderMap);
     }
     
-    // Configurar evento do seletor
-    const reportType = document.getElementById('report-type');
-    if (reportType) {
-        reportType.addEventListener('change', toggleCharts);
+    // Configurar botão de redefinir
+    const resetButton = document.getElementById('reset-map');
+    if (resetButton) {
+        resetButton.addEventListener('click', function() {
+            if (capacityFilter) capacityFilter.value = 'all';
+            renderMap();
+        });
     }
+    
+    // Renderizar mapa inicial
+    renderMap();
 }
 
-function initCharts() {
-    // Dados de exemplo para demonstração
+function renderMap() {
+    const capacityFilter = document.getElementById('capacity-filter');
+    const capacity = capacityFilter ? capacityFilter.value : 'all';
+    const mapElement = document.getElementById('school-map');
+    
+    // Limpar mapa
+    mapElement.innerHTML = '';
+    
+    // Dados de exemplo (em um sistema real viriam do servidor)
     const sampleSchools = [
-        { name: "Escola A", students: 350, teachers: 25 },
-        { name: "Escola B", students: 800, teachers: 45 },
-        { name: "Escola C", students: 80, teachers: 8 }
+        { name: "Escola Municipal São Paulo", students: 350, teachers: 25, address: "Rua das Flores, 123" },
+        { name: "Colégio Estadual Jardins", students: 800, teachers: 45, address: "Av. Paulista, 1000" },
+        { name: "Escola Rural Santa Maria", students: 80, teachers: 8, address: "Estrada do Sertão, km 15" }
     ];
     
-    // Gráfico de alunos
-    const studentsCtx = document.getElementById('students-chart').getContext('2d');
-    window.studentsChart = new Chart(studentsCtx, {
-        type: 'bar',
-        data: {
-            labels: sampleSchools.map(school => school.name),
-            datasets: [{
-                label: 'Número de Alunos',
-                data: sampleSchools.map(school => school.students),
-                backgroundColor: '#3498db',
-                borderColor: '#2980b9',
-                borderWidth: 1
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                title: {
-                    display: true,
-                    text: 'Alunos por Escola'
-                }
-            },
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            }
-        }
+    // Filtrar escolas por capacidade
+    const filteredSchools = sampleSchools.filter(school => {
+        if (capacity === 'all') return true;
+        if (capacity === 'low') return school.students <= 100;
+        if (capacity === 'medium') return school.students > 100 && school.students <= 500;
+        if (capacity === 'high') return school.students > 500;
+        return true;
     });
     
-    // Gráfico de professores
-    const teachersCtx = document.getElementById('teachers-chart').getContext('2d');
-    window.teachersChart = new Chart(teachersCtx, {
-        type: 'bar',
-        data: {
-            labels: sampleSchools.map(school => school.name),
-            datasets: [{
-                label: 'Número de Professores',
-                data: sampleSchools.map(school => school.teachers),
-                backgroundColor: '#2ecc71',
-                borderColor: '#27ae60',
-                borderWidth: 1
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                title: {
-                    display: true,
-                    text: 'Professores por Escola'
-                }
-            },
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            }
-        }
-    });
-    
-    // Gráfico de capacidade
-    const capacityCtx = document.getElementById('capacity-chart').getContext('2d');
-    window.capacityChart = new Chart(capacityCtx, {
-        type: 'doughnut',
-        data: {
-            labels: ['Baixa Capacidade', 'Média Capacidade', 'Alta Capacidade'],
-            datasets: [{
-                data: [1, 1, 1], // Dados iniciais
-                backgroundColor: [
-                    '#e74c3c',
-                    '#f39c12',
-                    '#2ecc71'
-                ],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                title: {
-                    display: true,
-                    text: 'Distribuição por Capacidade'
-                }
-            }
-        }
-    });
-}
-
-function updateReports() {
-    // Em um sistema real, aqui você buscaria os dados do servidor
-    // Por enquanto, usamos dados de exemplo
-    
-    const sampleData = {
-        totalSchools: 3,
-        totalStudents: 1230,
-        totalTeachers: 78,
-        avgRatio: 15.8
-    };
-    
-    // Atualizar estatísticas
-    document.getElementById('total-schools').textContent = sampleData.totalSchools;
-    document.getElementById('total-students').textContent = sampleData.totalStudents;
-    document.getElementById('total-teachers').textContent = sampleData.totalTeachers;
-    document.getElementById('avg-ratio').textContent = sampleData.avgRatio;
-    
-    console.log('Relatórios atualizados com dados de exemplo');
-}
-
-function toggleCharts() {
-    const reportType = document.getElementById('report-type').value;
-    const charts = document.querySelectorAll('.chart-wrapper');
-    
-    // Mostrar/ocultar gráficos baseado na seleção
-    charts.forEach(chart => chart.style.display = 'none');
-    
-    if (reportType === 'students') {
-        document.getElementById('students-chart').closest('.chart-wrapper').style.display = 'flex';
-    } else if (reportType === 'teachers') {
-        document.getElementById('teachers-chart').closest('.chart-wrapper').style.display = 'flex';
-    } else if (reportType === 'capacity') {
-        document.getElementById('capacity-chart').closest('.chart-wrapper').style.display = 'flex';
+    if (filteredSchools.length === 0) {
+        mapElement.innerHTML = '<div class="map-placeholder"><p>Nenhuma escola encontrada</p></div>';
+        return;
     }
+    
+    // Criar elementos do mapa (simulação)
+    const mapContent = document.createElement('div');
+    mapContent.className = 'map-content';
+    mapContent.style.position = 'relative';
+    mapContent.style.width = '100%';
+    mapContent.style.height = '100%';
+    mapContent.style.backgroundImage = 'linear-gradient(to right, #a8e6cf, #dcedc1)';
+    mapContent.style.backgroundSize = 'cover';
+    mapContent.style.borderRadius = 'var(--border-radius)';
+    
+    // Adicionar marcadores para cada escola
+    filteredSchools.forEach(school => {
+        const marker = createMapMarker(school);
+        mapContent.appendChild(marker);
+    });
+    
+    mapElement.appendChild(mapContent);
+}
+
+function createMapMarker(school) {
+    const marker = document.createElement('div');
+    marker.className = 'school-marker';
+    marker.style.position = 'absolute';
+    
+    // Posicionar aleatoriamente no mapa
+    marker.style.left = `${30 + Math.random() * 60}%`;
+    marker.style.top = `${30 + Math.random() * 60}%`;
+    
+    // Definir cor baseada na capacidade
+    let color, size;
+    if (school.students <= 100) {
+        color = '#e74c3c';
+        size = '15px';
+    } else if (school.students <= 500) {
+        color = '#f39c12';
+        size = '20px';
+    } else {
+        color = '#2ecc71';
+        size = '25px';
+    }
+    
+    marker.style.width = size;
+    marker.style.height = size;
+    marker.style.backgroundColor = color;
+    marker.style.borderRadius = '50%';
+    marker.style.border = '2px solid white';
+    marker.style.cursor = 'pointer';
+    marker.style.boxShadow = '0 2px 4px rgba(0,0,0,0.2)';
+    marker.style.transition = 'transform 0.2s';
+    
+    // Efeito hover
+    marker.addEventListener('mouseenter', () => {
+        marker.style.transform = 'scale(1.2)';
+    });
+    
+    marker.addEventListener('mouseleave', () => {
+        marker.style.transform = 'scale(1)';
+    });
+    
+    // Tooltip com informações
+    marker.title = `${school.name}\nAlunos: ${school.students}\nProfessores: ${school.teachers}`;
+    
+    // Evento de clique
+    marker.addEventListener('click', () => {
+        alert(`Escola: ${school.name}\nEndereço: ${school.address}\nAlunos: ${school.students}\nProfessores: ${school.teachers}`);
+    });
+    
+    return marker;
 }
