@@ -7,10 +7,22 @@ import (
 
 var temp = template.Must(template.ParseGlob("templates/*.html"))
 
-func Index(W http.ResponseWriter, r *http.Request) {
-	temp.ExecuteTemplate(W, "Index", nil)
+// Home - Página inicial
+func Home(w http.ResponseWriter, r *http.Request) {
+	temp.ExecuteTemplate(w, "home.html", nil)
 }
 
-func Mapa(W http.ResponseWriter, r *http.Request) {
-	temp.ExecuteTemplate(W, "Mapa", nil)
+// Mapa - Página do mapa
+func Mapa(w http.ResponseWriter, r *http.Request) {
+	temp.ExecuteTemplate(w, "mapa.html", nil)
+}
+
+// Cadastro - Página de cadastro
+func Cadastro(w http.ResponseWriter, r *http.Request) {
+	temp.ExecuteTemplate(w, "cadastro.html", nil)
+}
+
+// Relatorios - Página de relatórios
+func Relatorios(w http.ResponseWriter, r *http.Request) {
+	temp.ExecuteTemplate(w, "relatorios.html", nil)
 }
