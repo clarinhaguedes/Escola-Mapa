@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{.Title}}</title>
+    <link rel="stylesheet" href="http://localhost:8080/static/css/style.css">    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <!-- Cabeçalho fixo -->
+    <header class="header">
+        <div class="container">
+            <h1 class="logo">Mapa de Infraestrutura Escolar</h1>
+            <nav class="nav">
+                <ul class="nav-list">
+                    <li><a href="/" class="nav-link {{if eq .CurrentPage "home"}}active{{end}}">Início</a></li>
+                    <li><a href="/mapa" class="nav-link {{if eq .CurrentPage "mapa"}}active{{end}}">Mapa</a></li>
+                    <li><a href="/cadastro" class="nav-link {{if eq .CurrentPage "cadastro"}}active{{end}}">Cadastrar Escola</a></li>
+                    <li><a href="/relatorios" class="nav-link {{if eq .CurrentPage "relatorios"}}active{{end}}">Relatórios</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main">
+        <!-- O conteúdo específico de cada página será inserido aqui -->
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Mapa de Infraestrutura Escolar</p>
+        </div>
+    </footer>
+
+    <script src="/static/js/scripts.js"></script>
+</body>
+</html>
