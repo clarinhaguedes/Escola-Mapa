@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minha Conta - Mapa de Infraestrutura Escolar</title>
+    <link rel="stylesheet" href="http://localhost:8080/static/css/style.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <h1 class="logo">Mapa de Infraestrutura Escolar</h1>
+            <nav class="nav">
+                <ul class="nav-list">
+                    <li><a href="/" class="nav-link">Início</a></li>
+                    <li><a href="/mapa" class="nav-link">Mapa</a></li>
+                    <li><a href="/cadastro" class="nav-link">Cadastrar Escola</a></li>
+                    <li><a href="/relatorios" class="nav-link">Relatórios</a></li>
+                    <li><a href="/dashboard" class="nav-link active">Minha Conta</a></li>
+                    <li><a href="/logout" class="nav-link">Sair</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main">
+        <div class="container">
+            <div class="dashboard">
+                <h2 class="page-title">Minha Conta</h2>
+                
+                <div class="user-info">
+                    <div class="user-card">
+                        <h3>Olá, {{.Nome}}! 👋</h3>
+                        <p><strong>Email:</strong> {{.Email}}</p>
+                        <p><strong>Conta criada em:</strong> {{.CriadoEm.Format "02/01/2006"}}</p>
+                    </div>
+                </div>
+                
+                <div class="dashboard-actions">
+                    <div class="action-card">
+                        <h4>📊 Meus Relatórios</h4>
+                        <p>Acesse relatórios personalizados</p>
+                        <a href="/relatorios" class="btn btn-primary">Ver Relatórios</a>
+                    </div>
+                    
+                    <div class="action-card">
+                        <h4>🏫 Cadastrar Escola</h4>
+                        <p>Adicione uma nova escola ao sistema</p>
+                        <a href="/cadastro" class="btn btn-primary">Cadastrar Escola</a>
+                    </div>
+                    
+                    <div class="action-card">
+                        <h4>🗺️ Ver Mapa</h4>
+                        <p>Visualize todas as escolas no mapa</p>
+                        <a href="/mapa" class="btn btn-primary">Acessar Mapa</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2023 Mapa de Infraestrutura Escolar</p>
+        </div>
+    </footer>
+</body>
+</html>

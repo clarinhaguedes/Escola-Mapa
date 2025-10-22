@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Mapa de Infraestrutura Escolar</title>
+    <link rel="stylesheet" href="http://localhost:8080/static/css/style.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <h1 class="logo">Mapa de Infraestrutura Escolar</h1>
+            <nav class="nav">
+                <ul class="nav-list">
+                    <li><a href="/" class="nav-link">Início</a></li>
+                    <li><a href="/registro" class="nav-link">Cadastrar</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main">
+        <div class="container">
+            <div class="auth-container">
+                <div class="auth-card">
+                    <h2 class="page-title">Fazer Login</h2>
+                    
+                    {{if .Erro}}
+                    <div class="alert alert-error">
+                        {{.Erro}}
+                    </div>
+                    {{end}}
+
+                    <form method="POST" class="auth-form">
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" class="form-control" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="senha">Senha</label>
+                            <input type="password" id="senha" name="senha" class="form-control" required>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary btn-block">Entrar</button>
+                    </form>
+                    
+                    <div class="auth-links">
+                        <p>Não tem conta? <a href="/registro">Cadastre-se aqui</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2023 Mapa de Infraestrutura Escolar</p>
+        </div>
+    </footer>
+</body>
+</html>

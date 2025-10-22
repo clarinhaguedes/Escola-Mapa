@@ -16,6 +16,13 @@
                     <li><a href="/mapa" class="nav-link">Mapa</a></li>
                     <li><a href="/cadastro" class="nav-link">Cadastrar Escola</a></li>
                     <li><a href="/relatorios" class="nav-link">Relatórios</a></li>
+                    {{if .Logado}}
+                    <li><a href="/dashboard" class="nav-link">Minha Conta</a></li>
+                    <li><a href="/logout" class="nav-link">Sair</a></li>
+                    {{else}}
+                    <li><a href="/login" class="nav-link">Entrar</a></li>
+                    <li><a href="/registro" class="nav-link">Cadastrar</a></li>
+                    {{end}}
                 </ul>
             </nav>
         </div>
@@ -29,7 +36,14 @@
                     Visualize escolas em um mapa interativo, acompanhe dados de alunos, professores e estrutura física, 
                     e acesse relatórios estatísticos detalhados.
                 </p>
-                <a href="/mapa" class="btn btn-primary">Acessar Mapa</a>
+                {{if .Logado}}
+                <p class="welcome-message">Bem-vindo de volta! 👋</p>
+                {{else}}
+                <div class="auth-buttons">
+                    <a href="/registro" class="btn btn-primary">Criar Conta</a>
+                    <a href="/login" class="btn btn-secondary">Fazer Login</a>
+                </div>
+                {{end}}
             </div>
             
             <div class="features">
